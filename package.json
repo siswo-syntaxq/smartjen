@@ -1,0 +1,29 @@
+{
+  "name": "pdf-label",
+  "version": "1.0.0",
+  "description": "## What is CodeIgniter?",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.14.3",
+    "babel-loader": "^8.2.2",
+    "dropzone": "^5.9.2",
+    "jcanvas": "^21.0.1",
+    "jquery": "^3.6.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "css-loader": "^5.2.6",
+    "expose-loader": "^3.0.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.38.1"
+  }
+}
