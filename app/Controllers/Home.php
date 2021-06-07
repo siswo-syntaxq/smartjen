@@ -17,29 +17,25 @@ class Home extends BaseController
 	public function upload() 
 	{
 
-		// $files = $this->request->getFiles();
-		// $path = $this->request->getFile('file')->store();
+		$files = $this->request->getFiles();
+		$path = $this->request->getFile('file')->store();
 		
-		// $generateName =  ROOTPATH."public/temps/one";
+		$generateName =  ROOTPATH."public/temps/one";
 		
-		// // converting pdf to images with imagick
-		// $im = new \Imagick(WRITEPATH."uploads/".$path);
-		// $im->setResolution(160,220);
+		// converting pdf to images with imagick
+		$im = new \Imagick(WRITEPATH."uploads/".$path);
+		$im->setResolution(160,220);
 
-		// $pages = $im->getNumberImages();
+		$pages = $im->getNumberImages();
 		
-		// $im->writeImages($generateName.".jpeg", true);
+		$im->writeImages($generateName.".jpeg", true);
 		
-		// //Return the image
-		// $data = [
-		// 	'success' => true,
-		// 	'images' => $this->_getImagePdfPath($pages, $generateName)
-		// ];
-
+		//Return the image
 		$data = [
-				'success' => true,
-				'images' => ['temps/one.jpeg']
-			];
+			'success' => true,
+			'images' => $this->_getImagePdfPath($pages, $generateName)
+		];
+
 		return $this->response->setJSON($data);
 
 
@@ -83,21 +79,40 @@ class Home extends BaseController
 
 	}
 
+	/**
+	 * Show the slicing result
+	 * 
+	 *
+	 */  
 	public function success($code)
 	{
-
+		return view('success');
 	}
 
-	private function _slicing($layers) 
+
+	/**
+	 * Slicing the image and save to database
+	 * 
+	 * @param Array	$layers Selection layers
+	 * @param String $code Unique code 
+	 * 
+	 * @return Void
+	 */
+	private function _slicing($layers, $code) 
 	{
+		$slicingModel = new \App\Models\SlicingModel();
 		foreach($layers as $layer) {
 			$image = new \Imagick(ROOTPATH."public/".$layer->source);
-		}
-		//Insert into model
-		$slicingModel = new \App\Models\SlicingModel();
-		$data = [];
-		$slicingModel->insert($data);
+			foreach($layer->rectangle as $rec) {
+				$file_name = $rec->name;
+				$mode = 
+				$image->cropImage( $rec->width , $rec->height , $rec->x , $rec->y);
+				$thumb->writeImage($destinationPath.'/'.$fileName);
 
+				$data = [];
+				$slicingModel->insert($data);
+			}
+		}		
 	}
 
 		
